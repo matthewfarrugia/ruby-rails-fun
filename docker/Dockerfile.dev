@@ -1,0 +1,45 @@
+# Development image. Everything the app needs to build and run lives in here, so
+# the host needs nothing but Docker -- no Ruby, no Homebrew, no sudo.
+#
+# The production image is the separate ./Dockerfile that Rails generated, which is
+# what Kamal deploys. Do not merge the two: this one deliberately keeps the build
+# toolchain, dev/test gem groups, and no asset precompilation.
+FROM ruby:3.4-slim-bookworm
+
+# - build-essential / pkg-config / libffi-dev : compiling native gem extensions
+# - libyaml-dev                               : psych, required by Rails itself
+# - libsqlite3-dev / sqlite3                  : the sqlite3 gem, plus a CLI for poking at the DBs
+# - git                                       : bundler needs it for git-sourced gems
+# - curl                                      : healthcheck below
+RUN apt-get update -qq && apt-get install --no-install-recommends -y \
+      build-essential \
+      curl \
+      git \
+      libffi-dev \
+      libsqlite3-dev \
+      libyaml-dev \
+      pkg-config \
+      sqlite3 \
+      tzdata \
+ && rm -rf /var/lib/apt/lists/*
+
+# Gems are installed to /bundle, which compose backs with a named volume. Keeping
+# them off the bind-mounted source tree means `bundle install` results survive
+# container restarts and native extensions are built for Linux, not for macOS.
+ENV BUNDLE_PATH=/bundle \
+    BUNDLE_APP_CONFIG=/bundle \
+    PATH=/bundle/bin:/usr/local/bundle/bin:$PATH \
+    RAILS_ENV=development
+
+# foreman drives Procfile.dev via bin/dev. It is intentionally not in the Gemfile
+# (bundling your process manager is the one thing foreman's README asks you not to do).
+RUN gem install foreman --no-document
+
+WORKDIR /app
+
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint
+RUN chmod +x /usr/local/bin/entrypoint
+ENTRYPOINT ["entrypoint"]
+
+EXPOSE 3000
+CMD ["bin/dev"]

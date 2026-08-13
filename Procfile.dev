@@ -1,0 +1,7 @@
+# Started by bin/dev (via foreman). Three processes:
+#   web  - Puma. Bound to 0.0.0.0 so the port is reachable from outside the container.
+#   css  - Tailwind in watch mode, recompiling app/assets/builds/tailwind.css on change.
+#   jobs - Solid Queue worker, draining the `queue` database.
+web: bin/rails server -b 0.0.0.0
+css: bin/rails tailwindcss:watch
+jobs: bin/jobs

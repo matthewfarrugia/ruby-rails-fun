@@ -1,0 +1,23 @@
+# Development uses solid_cable rather than the Rails default `async` adapter.
+# `async` only broadcasts within a single process, so a Turbo Stream broadcast made
+# from `bin/rails console` or from a Solid Queue worker would never reach the browser.
+# Backing Action Cable with a database makes broadcasts work across processes, which
+# is what you want the moment a background job starts pushing updates to a page.
+development:
+  adapter: solid_cable
+  connects_to:
+    database:
+      writing: cable
+  polling_interval: 0.1.seconds
+  message_retention: 1.day
+
+test:
+  adapter: test
+
+production:
+  adapter: solid_cable
+  connects_to:
+    database:
+      writing: cable
+  polling_interval: 0.1.seconds
+  message_retention: 1.day

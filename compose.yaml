@@ -1,0 +1,54 @@
+# Development stack. `docker compose up` builds the image, installs gems, creates
+# the four SQLite databases, seeds them, and starts Puma + the Tailwind watcher +
+# a Solid Queue worker. Nothing is installed on the host.
+#
+# There is no database service here on purpose: SQLite is a file, so the "four
+# databases" are four files in ./storage. Rails 8 is built to run SQLite in
+# production (WAL, per-connection tuning, and the Solid trifecta), so a dev
+# Postgres container would be more machinery than this app needs.
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      # Source is bind-mounted, so edits on the host reload in the container.
+      - .:/app
+      # Gems, in a named volume. Never bind-mount these: native extensions built
+      # inside Linux must not collide with a host-built bundle.
+      - bundle:/bundle
+      # Container-local, rather than syncing cache/pid churn over the bind mount.
+      - tmp:/app/tmp
+      # The SQLite databases MUST live in a named volume, not on the bind mount.
+      # SQLite relies on POSIX advisory locking, which Docker Desktop's virtualised
+      # filesystem does not implement reliably; with Puma and a Solid Queue worker
+      # both writing, a bind-mounted database will eventually corrupt (observed:
+      # "database disk image is malformed" in solid_queue_processes). A named volume
+      # keeps the files on Linux ext4 inside the VM, where locking works.
+      # Inspect them with: docker compose exec web sqlite3 storage/development.sqlite3
+      - storage:/app/storage
+    environment:
+      # Rails 8 blocks unrecognised Host headers in development; the compose service
+      # name and localhost both need to be allowed for links to work from the host.
+      RAILS_DEVELOPMENT_HOSTS: localhost,127.0.0.1,web
+      # Puma threads; also becomes max_connections in config/database.yml.
+      RAILS_MAX_THREADS: 5
+    # Keeps `debug`/`binding.b` usable via `docker attach ruby-rails-fun-web`.
+    stdin_open: true
+    tty: true
+    healthcheck:
+      # /up is the health endpoint Rails generated in config/routes.rb.
+      test: ["CMD", "curl", "-fsS", "http://localhost:3000/up"]
+      interval: 10s
+      timeout: 5s
+      start_period: 90s
+      retries: 5
+    container_name: ruby-rails-fun-web
+
+volumes:
+  bundle:
+  tmp:
+  storage:
