@@ -10,5 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 0) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_13_155020) do
+  create_table "contributions", force: :cascade do |t|
+    t.integer "amount", null: false
+    t.integer "contributor_id"
+    t.datetime "created_at", null: false
+    t.string "currency", null: false
+    t.string "gift_id"
+    t.datetime "updated_at", null: false
+    t.index ["contributor_id"], name: "index_contributions_on_contributor_id"
+    t.index ["gift_id"], name: "index_contributions_on_gift_id"
+  end
+
+  create_table "contributors", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "email"
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_contributors_on_email"
+  end
+
+  create_table "gifts", id: false, force: :cascade do |t|
+    t.integer "amount", null: false
+    t.boolean "contribution", default: false
+    t.datetime "created_at", null: false
+    t.string "name", null: false
+    t.string "slug", null: false
+    t.text "summary"
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_gifts_on_slug", unique: true
+  end
+
+  add_foreign_key "contributions", "contributors"
+  add_foreign_key "contributions", "gifts", primary_key: "slug"
 end

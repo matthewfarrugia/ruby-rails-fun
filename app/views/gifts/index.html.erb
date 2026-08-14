@@ -1,0 +1,18 @@
+<div class="flex items-end justify-between">
+  <div>
+    <h1 class="text-2xl font-semibold tracking-tight">Gifts</h1>
+    <p class="mt-1 text-sm text-stone-500">
+      <%= pluralize(@gifts.size, "gifts") %> available
+    </p>
+  </div>
+</div>
+
+<div id="gifts" class="mt-8 space-y-3">
+  <%= render partial: "gifts/gift", collection: @gifts %>
+</div>
+
+<% if @gifts.empty? %>
+  <p id="gifts_empty" class="mt-8 rounded-lg border border-dashed border-stone-300 px-4 py-8 text-center text-sm text-stone-500">
+    No Gifts!
+  </p>
+<% end %>
