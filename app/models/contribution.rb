@@ -10,10 +10,9 @@ class Contribution < ApplicationRecord
   validates :gift,
             presence: true
 
-  scope :amount, ->(a,b) { b <=> a } # descending
+  scope :amount, ->(a, b) { b <=> a } # descending
 
   belongs_to :gift, primary_key: "slug"
   belongs_to :contributor
-
   # broadcasts_to ->(_gift) { "gifts" }, inserts_by: :append, target: "gifts"
 end

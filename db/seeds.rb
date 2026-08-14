@@ -5,7 +5,7 @@
 
 GIFTS = [
   { slug: "trip-to-iceland", name: "Our trip to Iceland", summary: "Contribute to our honeymoon in Iceland!", contribution: true, amount: 0 },
-  { slug: "trip-to-iceland333", name: "Our trip to Iceland", summary: "Contribute to our honeymoon in Iceland!", contribution: false, amount: 10000 },
+  { slug: "trip-to-iceland333", name: "Our trip to Iceland", summary: "Contribute to our honeymoon in Iceland!", contribution: false, amount: 10000 }
 ]
 
 GIFTS.each do |attributes|
@@ -35,4 +35,3 @@ Contributor.find_or_create_by!(email: "mitch.fablugia@example.com", name: "Mitch
     p "Test contribution already seeded"
   end
 end
-
