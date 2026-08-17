@@ -1,6 +1,8 @@
 class Gift < ApplicationRecord
   self.primary_key = "slug"
 
+  store_accessor :config, :image, :accepts_contributions
+
   validates :slug,
             presence: true,
             uniqueness: { case_sensitive: false },
