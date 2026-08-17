@@ -4,6 +4,7 @@ class Gift < ApplicationRecord
   store_accessor :config, :image, :accepts_contributions
 
   has_many :contributions, dependent: :delete_all
+  has_many :contributors, through: :contributions
 
   validates :slug,
             presence: true,

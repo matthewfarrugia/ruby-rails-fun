@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_17_133527) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_17_133742) do
   create_table "contributions", force: :cascade do |t|
     t.integer "amount", null: false
-    t.integer "contributor_id"
+    t.integer "contributor_id", null: false
     t.datetime "created_at", null: false
     t.string "currency", null: false
-    t.string "gift_id"
+    t.string "gift_id", null: false
     t.datetime "updated_at", null: false
     t.index ["contributor_id"], name: "index_contributions_on_contributor_id"
     t.index ["gift_id"], name: "index_contributions_on_gift_id"

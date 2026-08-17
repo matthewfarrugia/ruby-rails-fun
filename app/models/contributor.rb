@@ -1,4 +1,8 @@
 class Contributor < ApplicationRecord
+
+  has_many :contributions
+  has_many :gifts, through: :contributions
+
   validates :email,
             presence: true,
             uniqueness: { case_sensitive: false },
