@@ -23,9 +23,7 @@
         <span class="block w-full rounded-lg p-1 text-white bg-burntpeach group-hover:bg-tooburnt transition-colors">
           <%= gift.accepts_contributions ? "Contribute" : "Gift" %>
         </span>
-        <p class="text-xs text-gray-400">
-          <%= pluralize(gift.contributions.size, "contribution") %>
-        </p>
+        <%= render "gifts/contributions_count", gift: gift %>
       </div>
     </div>
   </div>

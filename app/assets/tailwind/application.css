@@ -10,3 +10,38 @@
     --color-burntpeach: #f2633c;
     --color-tooburnt: #eb3f10;
 }
+@layer base {
+    input[type="text"], input[type="email"], input[type="number"] {
+        border: 1px solid #aaa;
+        border-radius: var(--radius-md);
+        background: white;
+        color: #333;
+        padding: calc(var(--spacing) * 2) calc(var(--spacing) * 5);
+    }
+
+    input[type="submit"] {
+        cursor: pointer;
+    }
+}
+@layer components {
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing);
+        margin: calc(var(--spacing) * 2);
+    }
+
+    form .error {
+        color: #d30001;
+        font-size: var(--text-sm);
+        line-height: var(--tw-leading, var(--text-sm--line-height));
+        text-align: right;
+    }
+
+    form .field_with_errors input[type="text"],
+    form .field_with_errors input[type="email"],
+    form .field_with_errors input[type="number"] {
+        width: 100%;
+        border-color: #d30001;
+    }
+}

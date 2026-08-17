@@ -1,0 +1,13 @@
+<% flash.each do |type, message| %>
+  <%
+    styles = case type.to_sym
+             when :alert then "border-red-200 bg-red-50 text-red-800"
+             when :notice then "border-blue-200 bg-blue-50 text-blue-800"
+             when :error then "border-red-200 bg-red-50 text-red-800"
+             when :success then "border-emerald-200 bg-emerald-50 text-emerald-800"
+             when :warning then "border-yellow-200 bg-yellow-50 text-yellow-800"
+             else "border-blue-200 bg-blue-50 text-blue-800"
+             end
+  %>
+  <div class="mt-4 rounded-md border px-4 py-2 text-sm <%= styles %>"><%= message %></div>
+<% end %>

@@ -1,10 +1,10 @@
 class Contribution < ApplicationRecord
   validates :amount,
             presence: true,
-            length: { min: 1, maximum: 100000 }
-  # validates :currency,
-  #           presence: true,
-  #           format: { with: /\A[A-Z]{3}\z/i },
+            numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 10_000_000 }
+  validates :currency,
+            presence: true,
+            format: { with: RegexHelper::CURRENCY_FORMAT }
   validates :contributor,
             presence: true
   validates :gift,

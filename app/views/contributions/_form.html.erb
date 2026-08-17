@@ -1,0 +1,31 @@
+<%= form_with model: @form, url: gift_contributions_path(@gift) do |f|  %>
+  <% if @form.errors[:base].any? %>
+    <span class="error"><%= @form.errors[:base].first %></span>
+  <% end %>
+  <div class="form-group">
+    <%= f.label :name, 'Your Name' %>
+    <%= f.text_field :name %>
+    <% if @form.errors[:name].any? %>
+      <span class="error"><%= @form.errors[:name].first %></span>
+    <% end %>
+  </div>
+  <div class="form-group">
+    <%= f.label :email, 'Your email' %>
+    <%= f.email_field :email, placeholder: 'user@domain.com' %>
+    <% if @form.errors[:email].any? %>
+      <span class="error"><%= @form.errors[:email].first %></span>
+    <% end %>
+  </div>
+  <div class="form-group">
+    <%= f.label :amount, 'Amount' %>
+    <%= f.number_field :amount %>
+    <span class="text-xs text-gray-400">in pennies :^)</span>
+    <% if @form.errors[:amount].any? %>
+      <span class="error"><%= @form.errors[:amount].first %></span>
+    <% end %>
+  </div>
+  <%= f.hidden_field :currency, :value => "GBP" %>
+  <div class="m-2">
+    <%= f.submit "Submit", class: 'block w-full rounded-lg mt-4 p-1 text-center text-white bg-burntpeach' %>
+  </div>
+<% end %>

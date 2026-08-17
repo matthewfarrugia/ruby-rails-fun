@@ -1,0 +1,14 @@
+<%= turbo_stream.update :contribution_form do %>
+  <div class="flex flex-col justify-items-end my-5">
+    <p class="text-center text-sm mb-10">Thanks, <%= @form.name %>!</p>
+    <%= link_to gifts_path,
+                data: { turbo_frame: "_top" },
+                class: "block w-full rounded-lg p-1 text-center text-white bg-burntpeach" do %>
+      Back to all gifts
+    <% end %>
+  </div>
+<% end %>
+
+<%= turbo_stream.replace dom_id(@gift, :contributions_count) do %>
+  <%= render "gifts/contributions_count", gift: @gift %>
+<% end %>

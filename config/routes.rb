@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :gifts, only: [ :index, :show ], param: :slug
+  resources :gifts, only: [ :index, :show ], param: :slug do
+    resources :contributions, only: [ :new, :create ]
+  end
 
   get "up" => "rails/health#show", as: :rails_health_check
 
