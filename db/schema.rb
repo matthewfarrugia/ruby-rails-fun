@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_17_090539) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_17_133527) do
   create_table "contributions", force: :cascade do |t|
     t.integer "amount", null: false
     t.integer "contributor_id"
@@ -24,7 +24,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_17_090539) do
 
   create_table "contributors", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.string "email"
+    t.string "email", null: false
     t.string "name", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_contributors_on_email"
