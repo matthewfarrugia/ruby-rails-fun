@@ -1,14 +1,12 @@
-<div class="flex items-end justify-between">
-  <div>
-    <h1 class="text-2xl font-semibold tracking-tight">Gifts</h1>
-    <p class="mt-1 text-sm text-stone-500">
-      <%= pluralize(@gifts.size, "gifts") %> available
-    </p>
-  </div>
+<div class="mx-auto max-w-md flex items-center justify-between">
+  <h1 class="text-2xl font-calistoga tracking-tight grow shrink gap-1">Gifts</h1>
+  <p class="mt-1 text-sm">
+    <%= pluralize(@gifts.size, "gifts") %> available
+  </p>
 </div>
 
-<div id="gifts" class="mt-8 space-y-3">
-  <%= render partial: "gifts/gift", collection: @gifts %>
+<div id="gifts" class="mt-8 grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-2">
+  <%= render partial: "gifts/linked_gift", collection: @gifts, as: :gift %>
 </div>
 
 <% if @gifts.empty? %>

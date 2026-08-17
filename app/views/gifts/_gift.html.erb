@@ -1,16 +1,32 @@
-<article class="flex items-start justify-between gap-4 rounded-lg border border-stone-200 bg-white px-4 py-3">
-  <div class="min-w-0">
-    <div class="flex items-baseline gap-2">
-      <%= link_to gift.name, gift, class: "font-medium text-stone-900 hover:underline" %>
-      <span class="rounded bg-stone-100 px-1.5 py-0.5 font-mono text-xs text-stone-600">
-        <%= gift.slug %>
-      </span>
-    </div>
-
-    <% if gift.summary.present? %>
-      <p class="mt-1 truncate text-sm text-stone-500">
-        <%= gift.summary %>
-      </p>
+<article class="bg-white rounded-lg p-[clamp(.6rem,2.5vw,1rem)] group hover:shadow transition-shadow h-full w-full overflow-hidden">
+  <div class="flex flex-col items-center justify-between gap-4 h-full w-full">
+    <% if gift.image.present? %>
+      <div class="rounded-lg overflow-hidden w-full">
+        <%= image_tag gift.image, alt: gift.name, class: "aspect-square object-cover" %>
+      </div>
     <% end %>
+
+    <div class="flex flex-col items-center justify-between text-center gap-10 w-full grow shrink">
+      <h4 class="font-medium text-peach group-hover:underline">
+        <%= gift.name %>
+      </h4>
+
+      <% if gift.summary.present? %>
+        <p class="mt-1 min-w-0 text-sm text-stone-500">
+          <%= gift.summary %>
+        </p>
+      <% end %>
+
+      <div class="flex flex-col gap-2 w-full">
+        <%# Styled as a button but deliberately not one: callers wrap this partial %>
+        <%# in a link, and interactive elements may not nest inside an anchor. %>
+        <span class="block w-full rounded-lg p-1 text-white bg-burntpeach group-hover:bg-tooburnt transition-colors">
+          <%= gift.accepts_contributions ? "Contribute" : "Gift" %>
+        </span>
+        <p class="text-xs text-gray-400">
+          <%= pluralize(gift.contributions.size, "contribution") %>
+        </p>
+      </div>
+    </div>
   </div>
 </article>

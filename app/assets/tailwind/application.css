@@ -1,1 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Calistoga&family=Homemade+Apple&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap');
 @import "tailwindcss";
+
+@theme {
+    --font-apple: 'Homemade Apple', serif;
+    --font-calistoga: 'Calistoga', serif;
+    --font-plex: 'IBM Plex Sans';
+    --color-calm: #f9f6f0;
+    --color-peach: #f5896c;
+    --color-burntpeach: #f2633c;
+    --color-tooburnt: #eb3f10;
+}

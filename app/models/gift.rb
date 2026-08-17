@@ -3,6 +3,8 @@ class Gift < ApplicationRecord
 
   store_accessor :config, :image, :accepts_contributions
 
+  has_many :contributions, dependent: :delete_all
+
   validates :slug,
             presence: true,
             uniqueness: { case_sensitive: false },

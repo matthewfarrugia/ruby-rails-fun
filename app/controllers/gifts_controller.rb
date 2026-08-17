@@ -2,8 +2,7 @@ class GiftsController < ApplicationController
   before_action only: :show
 
   def index
-    @gifts = Gift.alphabetical
-    @gift = Gift.new
+    @gifts = Gift.alphabetical.includes(:contributions)
   end
 
   def show
