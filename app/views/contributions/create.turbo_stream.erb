@@ -12,3 +12,7 @@
 <%= turbo_stream.replace dom_id(@gift, :contributions_count) do %>
   <%= render "gifts/contributions_count", gift: @gift %>
 <% end %>
+
+<%= turbo_stream.replace dom_id(@gift, :contributions) do %>
+  <%= render "contributions/list", contributions: @gift.contributions %>
+<% end %>
