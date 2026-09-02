@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_17_133742) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_02_123756) do
   create_table "contributions", force: :cascade do |t|
     t.integer "amount", null: false
     t.integer "contributor_id", null: false
@@ -31,7 +31,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_17_133742) do
   end
 
   create_table "gifts", id: false, force: :cascade do |t|
-    t.integer "amount", null: false
+    t.integer "amount_cents", default: 0, null: false
+    t.string "amount_currency", default: "GBP", null: false
     t.json "config", default: {}, null: false
     t.datetime "created_at", null: false
     t.string "name", null: false

@@ -13,6 +13,12 @@
         </p>
       <% end %>
 
+      <% if gift.amount > 0 %>
+        <p class="font-medium text-peach">
+          <%= gift.amount.format  %>
+        </p>
+      <% end %>
+
       <%= turbo_frame_tag :contribution_form do %>
         <%= link_to new_gift_contribution_path(gift),
           class: "block w-full rounded-lg p-1 text-center text-white bg-burntpeach" do %>

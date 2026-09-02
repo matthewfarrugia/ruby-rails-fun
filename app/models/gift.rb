@@ -2,6 +2,7 @@ class Gift < ApplicationRecord
   self.primary_key = "slug"
 
   store_accessor :config, :image, :accepts_contributions
+  monetize :amount_cents
 
   has_many :contributions, dependent: :delete_all
   has_many :contributors, through: :contributions

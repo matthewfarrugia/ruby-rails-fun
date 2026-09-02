@@ -11,6 +11,12 @@
         <%= gift.name %>
       </h4>
 
+      <% if gift.amount > 0 %>
+        <p class="font-medium text-peach">
+          <%= gift.amount.format  %>
+        </p>
+      <% end %>
+
       <% if gift.summary.present? %>
         <p class="mt-1 min-w-0 text-sm text-stone-500">
           <%= gift.summary %>
