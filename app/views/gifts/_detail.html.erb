@@ -20,9 +20,15 @@
       <% end %>
 
       <%= turbo_frame_tag :contribution_form do %>
-        <%= link_to new_gift_contribution_path(gift),
-          class: "block w-full rounded-lg p-1 text-center text-white bg-burntpeach" do %>
-          <%= gift.accepts_contributions ? "Send Contribution" : "Purchase Gift" %>
+        <% if gift.accepts_contributions or gift.contributions.count == 0 %>
+          <%= link_to new_gift_contribution_path(gift),
+            class: "block w-full rounded-lg p-1 text-center text-white bg-burntpeach" do %>
+            <%= gift.accepts_contributions ? "Make Contribution" : "Register Gift" %>
+          <% end %>
+        <% else %>
+          <span class="font-medium text-peach">
+            Already gifted
+          </span>
         <% end %>
       <% end %>
 

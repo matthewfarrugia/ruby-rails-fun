@@ -26,9 +26,15 @@
       <div class="flex flex-col gap-2 w-full">
         <%# Styled as a button but deliberately not one: callers wrap this partial %>
         <%# in a link, and interactive elements may not nest inside an anchor. %>
-        <span class="block w-full rounded-lg p-1 text-white bg-burntpeach group-hover:bg-tooburnt transition-colors">
-          <%= gift.accepts_contributions ? "Contribute" : "Gift" %>
-        </span>
+        <% if gift.accepts_contributions or gift.contributions.count == 0 %>
+          <span class="block w-full rounded-lg p-1 text-white bg-burntpeach group-hover:bg-tooburnt transition-colors">
+            <%= gift.accepts_contributions ? "Contribute" : "Gift" %>
+          </span>
+        <% else %>
+          <span class="block w-full rounded-lg p-1 bg-stone-100 text-black">
+            Already gifted
+          </span>
+        <% end %>
         <%= render "gifts/contributions_count", gift: gift %>
       </div>
     </div>
