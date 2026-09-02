@@ -4,27 +4,37 @@
   <% end %>
   <div class="form-group">
     <%= f.label :name, 'Your Name' %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, class: 'border border-stone-300' %>
     <% if @form.errors[:name].any? %>
       <span class="error"><%= @form.errors[:name].first %></span>
     <% end %>
   </div>
   <div class="form-group">
     <%= f.label :email, 'Your email' %>
-    <%= f.email_field :email, placeholder: 'user@domain.com' %>
+    <%= f.email_field :email, placeholder: 'user@domain.com', class: 'border border-stone-300' %>
     <% if @form.errors[:email].any? %>
       <span class="error"><%= @form.errors[:email].first %></span>
     <% end %>
   </div>
   <div class="form-group">
     <%= f.label :amount, 'Amount' %>
-    <%= f.number_field :amount %>
-    <span class="text-xs text-gray-400">in pennies :^)</span>
-    <% if @form.errors[:amount].any? %>
+    <div class="mt-2">
+      <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
+        <div class="shrink-0 text-base text-gray-500 select-none">£</div>
+        <%= f.number_field :amount, placeholder: '0.00', class: 'block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none' %>
+        <div class="grid shrink-0 grid-cols-1 focus-within:relative">
+          <%= f.select :currency, Money::Currency.table, label: 'Currency', class: "col-start-1 row-start-1 w-full appearance-none rounded-md py-1.5 pr-7 pl-3 text-base text-gray-500 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600" %>
+          <svg viewBox="0 0 16 16" fill="currentColor" data-slot="icon" aria-hidden="true" class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4">
+            <path d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd" />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <% if @form.errors[:amount].any? or @form.errors[:currency].any? %>
       <span class="error"><%= @form.errors[:amount].first %></span>
+      <span class="error"><%= @form.errors[:currency].first %></span>
     <% end %>
   </div>
-  <%= f.hidden_field :currency, :value => "GBP" %>
   <div class="m-2">
     <%= f.submit "Submit", class: 'block w-full rounded-lg mt-4 p-1 text-center text-white bg-burntpeach' %>
   </div>

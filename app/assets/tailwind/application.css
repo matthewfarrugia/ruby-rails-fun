@@ -12,15 +12,18 @@
 }
 @layer base {
     input[type="text"], input[type="email"], input[type="number"] {
-        border: 1px solid #aaa;
         border-radius: var(--radius-md);
         background: white;
-        color: #333;
         padding: calc(var(--spacing) * 2) calc(var(--spacing) * 5);
+        @apply w-full text-gray-900;
     }
 
     input[type="submit"] {
         cursor: pointer;
+    }
+
+    .field_with_errors > :is(input, textarea, select) {
+        @apply border-red-500;
     }
 }
 @layer components {
@@ -32,16 +35,13 @@
     }
 
     form .error {
-        color: #d30001;
         font-size: var(--text-sm);
         line-height: var(--tw-leading, var(--text-sm--line-height));
         text-align: right;
+        @apply text-red-500
     }
 
-    form .field_with_errors input[type="text"],
-    form .field_with_errors input[type="email"],
-    form .field_with_errors input[type="number"] {
-        width: 100%;
-        border-color: #d30001;
-    }
+    /*div.field_with_errors > label {*/
+    /*    @apply text-red-900;*/
+    /*}*/
 }

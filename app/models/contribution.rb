@@ -1,10 +1,7 @@
 class Contribution < ApplicationRecord
-  validates :amount,
-            presence: true,
-            numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 10_000_000 }
-  validates :currency,
-            presence: true,
-            format: { with: RegexHelper::CURRENCY_FORMAT }
+  monetize :amount_cents,
+           presence: true,
+           numericality: { greater_than: 0, less_than_or_equal_to: 10_000_000 }
   validates :contributor,
             presence: true
   validates :gift,

@@ -6,9 +6,8 @@ class ContributionForm
   validates :gift, presence: true
   validates :name, length: { minimum: 3, maximum: 255 }, presence: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, presence: true
-  validates :amount, numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 10_000_000 } # in pennies right now
-
-  validates :currency, format: { with: /\AGBP\z/ }, presence: true # @todo: currently just a hidden field
+  validates :amount, numericality: { greater_than: 0, less_than_or_equal_to: 10_000_000 }
+  validates :currency, presence: true, inclusion: { in: Money::Currency.table.keys.map(&:to_s) }
 
   def save
     return false unless valid?
@@ -20,8 +19,7 @@ class ContributionForm
       Contribution.create!(
         gift: gift,
         contributor: contributor,
-        amount: amount,
-        currency: currency
+        amount: Money.new(amount, currency)
       )
     end
 
