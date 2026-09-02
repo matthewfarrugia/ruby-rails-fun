@@ -22,3 +22,10 @@
   </div>
 </dl>
 
+<section class="mt-4 flex flex-col rounded-lg bg-white px-4 py-3">
+  <h4>Contributions</h4>
+  <hr class="h-px my-1 bg-stone-200 border-0">
+  <ul class="flex flex-col gap-2 mt-2">
+    <%= render collection: @gift.contributions, partial: "contributions/contribution_li", as: :contribution %>
+  </ul>
+</section>

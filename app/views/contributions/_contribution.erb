@@ -1,0 +1,14 @@
+<dl class="grid grid-rows-[auto] auto-cols-fr grid-flow-col">
+  <dt class="sr-only">Contributor</dt>
+  <dd class="text-stone-500">
+    <%= contribution.contributor.name %>
+  </dd>
+  <dt class="sr-only">Email</dt>
+  <dd class="text-stone-500">
+    <%= contribution.contributor.email %>
+  </dd>
+  <dt class="sr-only">Amount</dt>
+  <dd>
+    <%= contribution.amount.format %>
+  </dd>
+</dl>
